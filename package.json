@@ -1,0 +1,23 @@
+{
+  "name": "stock-exchange-crud-typescript",
+  "version": "1.0.0",
+  "description": "Stock Exchange App with TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricDosReis/stock-exchange-crud-typescript.git"
+  },
+  "author": "Eric dos Reis <ericdosreis.personal@gmail.com> (https://github.com/EricDosReis)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EricDosReis/stock-exchange-crud-typescript/issues"
+  },
+  "homepage": "https://github.com/EricDosReis/stock-exchange-crud-typescript#readme",
+  "devDependencies": {
+    "typescript": "^2.3.2"
+  }
+}
