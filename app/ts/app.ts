@@ -1,4 +1,5 @@
-const trading = new Trading(new Date, 1, 100);
+const controller = new TradingController();
 
-console.log(trading);
-
+document
+  .querySelector('.form')
+  .addEventListener('submit', controller.add.bind(controller));
