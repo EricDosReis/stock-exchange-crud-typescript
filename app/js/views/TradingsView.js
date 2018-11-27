@@ -1,6 +1,17 @@
-class TradingsView extends View {
-    template(tradings) {
-        return `
+System.register(["./View"], function (exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var View_1, TradingsView;
+    return {
+        setters: [
+            function (View_1_1) {
+                View_1 = View_1_1;
+            }
+        ],
+        execute: function () {
+            TradingsView = class TradingsView extends View_1.View {
+                template(tradings) {
+                    return `
       <table class="table table-hover table-bordered">
         <thead>
           <tr>
@@ -25,5 +36,9 @@ class TradingsView extends View {
         </tbody>
       </table>
     `;
-    }
-}
+                }
+            };
+            exports_1("TradingsView", TradingsView);
+        }
+    };
+});

@@ -1,4 +1,7 @@
-class TradingController {
+import { Trading, Tradings } from '../models/index';
+import { TradingsView, MessageView } from '../views/index';
+
+export class TradingController {
 
   private _inputDate: HTMLInputElement;
   private _inputQuantity: HTMLInputElement;

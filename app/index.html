@@ -49,15 +49,13 @@
 
     <div id="tradings-view"></div>
 
-    <script src="./js/models/Trading.js"></script>
-    <script src="./js/models/Tradings.js"></script>
+    <script src="lib/system.js"></script>
+    <script>
+      System.defaultJSExtensions = true;
 
-    <script src="./js/views/View.js"></script>
-    <script src="./js/views/MessageView.js"></script>
-    <script src="./js/views/TradingsView.js"></script>
-
-    <script src="./js/controllers/TradingController.js"></script>
-
-    <script src="./js/app.js"></script>
+      System
+        .import('js/app.js')
+        .catch(err => console.error(err));
+    </script>
   </body>
 </html>
