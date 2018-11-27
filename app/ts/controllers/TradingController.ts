@@ -4,6 +4,7 @@ class TradingController {
   private _inputValue: HTMLInputElement;
   private _tradings = new Tradings();
   private _tradingsView = new TradingsView('#tradings-view');
+  private _messageView = new MessageView('#message-view');
 
   constructor() {
     this._inputDate = <HTMLInputElement>document.querySelector('#date');
@@ -23,5 +24,6 @@ class TradingController {
     ))
 
     this._tradingsView.update(this._tradings);
+    this._messageView.update('Trading added successfully');
   }
 }
