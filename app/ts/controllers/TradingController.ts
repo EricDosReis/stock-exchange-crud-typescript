@@ -1,4 +1,5 @@
 class TradingController {
+
   private _inputDate: HTMLInputElement;
   private _inputQuantity: HTMLInputElement;
   private _inputValue: HTMLInputElement;
@@ -26,4 +27,5 @@ class TradingController {
     this._tradingsView.update(this._tradings);
     this._messageView.update('Trading added successfully');
   }
+  
 }

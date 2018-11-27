@@ -1,4 +1,5 @@
 class Tradings {
+
   private _tradings: Trading[] = [];
 
   add(trading: Trading): void {
@@ -8,4 +9,5 @@ class Tradings {
   toArray(): Trading[] {
     return [].concat(this._tradings);
   }
+  
 }

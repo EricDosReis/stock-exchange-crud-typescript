@@ -1,10 +1,4 @@
-class TradingsView {
-
-  private _element: Element;
-
-  constructor(selector: string) {
-    this._element = document.querySelector(selector);
-  };
+class TradingsView extends View<Tradings> {
 
   template(tradings: Tradings): string {
     return `
@@ -34,10 +28,6 @@ class TradingsView {
         </tbody>
       </table>
     `;
-  }
-
-  update(tradings: Tradings):void {
-    this._element.innerHTML = this.template(tradings);
   }
 
 }

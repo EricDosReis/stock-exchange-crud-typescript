@@ -1,4 +1,5 @@
 class Trading {
+
   constructor(private _date: Date, private _quantity: number, private _value: number) {}
 
   get date() {
@@ -16,4 +17,5 @@ class Trading {
   get volume() {
     return this._quantity * this._value;
   }
+  
 }
