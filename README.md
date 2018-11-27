@@ -2,8 +2,9 @@
 
 **Prerequisites**: nodeJS installed.
 
-First clone this repository.
-
-**TODO**
+* clone this repository
+* install dependencies ```npm i```
+* run ```npm start```
+* access in your browser http://localhost:3000
 
 That's all folks!
