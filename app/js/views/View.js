@@ -6,11 +6,18 @@ System.register([], function (exports_1, context_1) {
         setters: [],
         execute: function () {
             View = class View {
-                constructor(selector) {
-                    this._element = document.querySelector(selector);
+                constructor(selector, noScriptTag = false) {
+                    this._element = document.querySelector(selector) || document.body;
+                    this._noScriptTag = noScriptTag;
                 }
                 update(model) {
-                    this._element.innerHTML = this.template(model);
+                    let template = this.template(model);
+                    if (this._noScriptTag)
+                        template = this._removeScriptTag(template);
+                    this._element.innerHTML = template;
+                }
+                _removeScriptTag(template) {
+                    return template.replace(/<script>[\s\S]*?<\/script>/g, '');
                 }
             };
             exports_1("View", View);

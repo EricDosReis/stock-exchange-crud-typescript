@@ -9,7 +9,7 @@ export class Tradings {
   }
 
   toArray(): Trading[] {
-    return [].concat(this._tradings);
+    return ([] as Trading[]).concat(this._tradings);
   }
   
 }

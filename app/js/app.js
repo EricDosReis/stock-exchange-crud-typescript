@@ -1,7 +1,7 @@
 System.register(["./controllers/TradingController"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var TradingController_1, controller;
+    var TradingController_1, controller, form;
     return {
         setters: [
             function (TradingController_1_1) {
@@ -10,9 +10,9 @@ System.register(["./controllers/TradingController"], function (exports_1, contex
         ],
         execute: function () {
             controller = new TradingController_1.TradingController();
-            document
-                .querySelector('.form')
-                .addEventListener('submit', controller.add.bind(controller));
+            form = document.querySelector('.form');
+            if (form)
+                form.addEventListener('submit', controller.add.bind(controller));
         }
     };
 });
