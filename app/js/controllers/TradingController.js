@@ -31,8 +31,7 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                     this._messageView = new index_2.MessageView('#message-view');
                     this._tradingsView.update(this._tradings);
                 }
-                add(event) {
-                    event.preventDefault();
+                add() {
                     let date = new Date(this._inputDate.value.replace(/-/g, '/'));
                     if (!this._isWeekend(date)) {
                         this._tradings.add(new index_1.Trading(date, parseInt(this._inputQuantity.value), parseFloat(this._inputValue.value)));
@@ -42,6 +41,18 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                     else {
                         this._messageView.update('It is not possible perform tradings on weekends.');
                     }
+                }
+                import() {
+                    fetch('http://localhost:8080/tradings')
+                        .then(res => res.json())
+                        .then((tradings) => {
+                        tradings
+                            .map(trading => new index_1.Trading(new Date(), trading.quantity, trading.value))
+                            .forEach(trading => this._tradings.add(trading));
+                        this._tradingsView.update(this._tradings);
+                        this._messageView.update('Tradings imported successfully');
+                    })
+                        .catch(err => this._messageView.update(`An unexpected error occurs: ${err}`));
                 }
                 _isWeekend(date) {
                     const day = date.getDay();
@@ -60,8 +71,11 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                 index_3.domInject('#value')
             ], TradingController.prototype, "_inputValue", void 0);
             __decorate([
-                index_3.logExecutionTime()
+                index_3.throttle()
             ], TradingController.prototype, "add", null);
+            __decorate([
+                index_3.throttle()
+            ], TradingController.prototype, "import", null);
             exports_1("TradingController", TradingController);
         }
     };

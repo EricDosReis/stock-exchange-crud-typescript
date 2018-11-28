@@ -1,7 +1,7 @@
-import { Trading, Tradings } from '../models/index';
+import { Trading, Tradings, PartialTrading } from '../models/index';
 import { TradingsView, MessageView } from '../views/index';
 
-import { logExecutionTime, domInject } from '../helpers/decorators/index';
+import { logExecutionTime, domInject, throttle } from '../helpers/decorators/index';
 import { weekDay } from '../enums/weekDay';
 
 export class TradingController {
@@ -23,10 +23,8 @@ export class TradingController {
     this._tradingsView.update(this._tradings);
   }
 
-  @logExecutionTime()
-  add(event: Event) {
-    event.preventDefault();
-
+  @throttle()
+  add() {
     let date = new Date(this._inputDate.value.replace(/-/g, '/'));
 
     if (!this._isWeekend(date)) {
@@ -41,6 +39,21 @@ export class TradingController {
     } else {
       this._messageView.update('It is not possible perform tradings on weekends.');
     }
+  }
+
+  @throttle()
+  import():void {
+    fetch('http://localhost:8080/tradings')
+      .then(res => res.json())
+      .then((tradings: PartialTrading[]) => {
+        tradings
+          .map(trading => new Trading(new Date(), trading.quantity, trading.value))
+          .forEach(trading => this._tradings.add(trading));
+
+        this._tradingsView.update(this._tradings);
+        this._messageView.update('Tradings imported successfully');
+      })
+      .catch(err => this._messageView.update(`An unexpected error occurs: ${err}`));
   }
 
   private _isWeekend(date: Date): boolean {
