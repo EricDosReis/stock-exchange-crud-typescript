@@ -1,7 +1,13 @@
-System.register(["../models/index", "../views/index", "../enums/weekDay"], function (exports_1, context_1) {
+System.register(["../models/index", "../views/index", "../helpers/decorators/index", "../enums/weekDay"], function (exports_1, context_1) {
     "use strict";
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
     var __moduleName = context_1 && context_1.id;
-    var index_1, index_2, weekDay_1, TradingController;
+    var index_1, index_2, index_3, weekDay_1, TradingController;
     return {
         setters: [
             function (index_1_1) {
@@ -9,6 +15,9 @@ System.register(["../models/index", "../views/index", "../enums/weekDay"], funct
             },
             function (index_2_1) {
                 index_2 = index_2_1;
+            },
+            function (index_3_1) {
+                index_3 = index_3_1;
             },
             function (weekDay_1_1) {
                 weekDay_1 = weekDay_1_1;
@@ -44,6 +53,9 @@ System.register(["../models/index", "../views/index", "../enums/weekDay"], funct
                     return false;
                 }
             };
+            __decorate([
+                index_3.logExecutionTime()
+            ], TradingController.prototype, "add", null);
             exports_1("TradingController", TradingController);
         }
     };

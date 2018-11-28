@@ -1,6 +1,7 @@
 import { Trading, Tradings } from '../models/index';
 import { TradingsView, MessageView } from '../views/index';
 
+import { logExecutionTime } from '../helpers/decorators/index';
 import { weekDay } from '../enums/weekDay';
 
 export class TradingController {
@@ -20,6 +21,7 @@ export class TradingController {
     this._tradingsView.update(this._tradings);
   }
 
+  @logExecutionTime()
   add(event: Event) {
     event.preventDefault();
 
