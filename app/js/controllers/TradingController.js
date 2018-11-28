@@ -29,9 +29,6 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                     this._tradings = new index_1.Tradings();
                     this._tradingsView = new index_2.TradingsView('#tradings-view');
                     this._messageView = new index_2.MessageView('#message-view');
-                    this._inputDate = document.querySelector('#date');
-                    this._inputQuantity = document.querySelector('#quantity');
-                    this._inputValue = document.querySelector('#value');
                     this._tradingsView.update(this._tradings);
                 }
                 add(event) {
@@ -53,6 +50,15 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                     return false;
                 }
             };
+            __decorate([
+                index_3.domInject('#date')
+            ], TradingController.prototype, "_inputDate", void 0);
+            __decorate([
+                index_3.domInject('#quantity')
+            ], TradingController.prototype, "_inputQuantity", void 0);
+            __decorate([
+                index_3.domInject('#value')
+            ], TradingController.prototype, "_inputValue", void 0);
             __decorate([
                 index_3.logExecutionTime()
             ], TradingController.prototype, "add", null);

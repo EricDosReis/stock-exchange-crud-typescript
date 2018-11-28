@@ -1,23 +1,25 @@
 import { Trading, Tradings } from '../models/index';
 import { TradingsView, MessageView } from '../views/index';
 
-import { logExecutionTime } from '../helpers/decorators/index';
+import { logExecutionTime, domInject } from '../helpers/decorators/index';
 import { weekDay } from '../enums/weekDay';
 
 export class TradingController {
 
+  @domInject('#date')
   private _inputDate: HTMLInputElement;
+
+  @domInject('#quantity')
   private _inputQuantity: HTMLInputElement;
+
+  @domInject('#value')
   private _inputValue: HTMLInputElement;
+
   private _tradings = new Tradings();
   private _tradingsView = new TradingsView('#tradings-view');
   private _messageView = new MessageView('#message-view');
 
   constructor() {
-    this._inputDate = <HTMLInputElement>document.querySelector('#date');
-    this._inputQuantity = <HTMLInputElement>document.querySelector('#quantity');
-    this._inputValue = <HTMLInputElement>document.querySelector('#value');
-
     this._tradingsView.update(this._tradings);
   }
 
