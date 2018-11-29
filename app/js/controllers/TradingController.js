@@ -1,4 +1,4 @@
-System.register(["../models/index", "../views/index", "../helpers/decorators/index", "../enums/weekDay"], function (exports_1, context_1) {
+System.register(["../models/index", "../views/index", "../helpers/index", "../enums/weekDay", "../services/index"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7,7 +7,7 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
     var __moduleName = context_1 && context_1.id;
-    var index_1, index_2, index_3, weekDay_1, TradingController;
+    var index_1, index_2, index_3, weekDay_1, index_4, TradingController;
     return {
         setters: [
             function (index_1_1) {
@@ -21,6 +21,9 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
             },
             function (weekDay_1_1) {
                 weekDay_1 = weekDay_1_1;
+            },
+            function (index_4_1) {
+                index_4 = index_4_1;
             }
         ],
         execute: function () {
@@ -29,6 +32,7 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                     this._tradings = new index_1.Tradings();
                     this._tradingsView = new index_2.TradingsView('#tradings-view');
                     this._messageView = new index_2.MessageView('#message-view');
+                    this._tradingService = new index_4.TradingService();
                     this._tradingsView.update(this._tradings);
                 }
                 add() {
@@ -42,17 +46,16 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                         this._messageView.update('It is not possible perform tradings on weekends.');
                     }
                 }
-                import() {
-                    fetch('http://localhost:8080/tradings')
-                        .then(res => res.json())
+                importAll() {
+                    this._tradingService
+                        .getTradings(index_3.isOk)
                         .then((tradings) => {
                         tradings
-                            .map(trading => new index_1.Trading(new Date(), trading.quantity, trading.value))
-                            .forEach(trading => this._tradings.add(trading));
+                            .forEach((trading) => this._tradings.add(trading));
                         this._tradingsView.update(this._tradings);
                         this._messageView.update('Tradings imported successfully');
                     })
-                        .catch(err => this._messageView.update(`An unexpected error occurs: ${err}`));
+                        .catch((err) => this._messageView.update(`An unexpected error occurs: ${err}`));
                 }
                 _isWeekend(date) {
                     const day = date.getDay();
@@ -75,7 +78,7 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
             ], TradingController.prototype, "add", null);
             __decorate([
                 index_3.throttle()
-            ], TradingController.prototype, "import", null);
+            ], TradingController.prototype, "importAll", null);
             exports_1("TradingController", TradingController);
         }
     };

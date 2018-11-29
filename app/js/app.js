@@ -15,7 +15,7 @@ System.register(["./controllers/TradingController"], function (exports_1, contex
             if (form)
                 form.addEventListener('submit', controller.add.bind(controller));
             if (buttonImport)
-                buttonImport.addEventListener('click', controller.import.bind(controller));
+                buttonImport.addEventListener('click', controller.importAll.bind(controller));
         }
     };
 });

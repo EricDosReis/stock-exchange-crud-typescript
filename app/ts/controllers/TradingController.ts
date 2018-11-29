@@ -1,8 +1,9 @@
 import { Trading, Tradings, PartialTrading } from '../models/index';
 import { TradingsView, MessageView } from '../views/index';
 
-import { logExecutionTime, domInject, throttle } from '../helpers/decorators/index';
+import { domInject, throttle, isOk } from '../helpers/index';
 import { weekDay } from '../enums/weekDay';
+import { TradingService } from '../services/index';
 
 export class TradingController {
 
@@ -18,6 +19,7 @@ export class TradingController {
   private _tradings = new Tradings();
   private _tradingsView = new TradingsView('#tradings-view');
   private _messageView = new MessageView('#message-view');
+  private _tradingService = new TradingService();
 
   constructor() {
     this._tradingsView.update(this._tradings);
@@ -42,18 +44,17 @@ export class TradingController {
   }
 
   @throttle()
-  import():void {
-    fetch('http://localhost:8080/tradings')
-      .then(res => res.json())
-      .then((tradings: PartialTrading[]) => {
+  importAll():void {
+    this._tradingService
+      .getTradings(isOk)
+      .then((tradings) => {
         tradings
-          .map(trading => new Trading(new Date(), trading.quantity, trading.value))
-          .forEach(trading => this._tradings.add(trading));
+          .forEach((trading: Trading) => this._tradings.add(trading));
 
         this._tradingsView.update(this._tradings);
         this._messageView.update('Tradings imported successfully');
       })
-      .catch(err => this._messageView.update(`An unexpected error occurs: ${err}`));
+      .catch((err: string) => this._messageView.update(`An unexpected error occurs: ${err}`));
   }
 
   private _isWeekend(date: Date): boolean {
