@@ -1,7 +1,7 @@
 import { Trading, PartialTrading } from "../models/index";
 
 export class TradingService {
-  getTradings(handler: Function): Promise<Trading[]> {
+  getTradings(handler: HandlerFunction): Promise<Trading[]> {
     return fetch('http://localhost:8080/tradings')
       .then(res => handler(res))
       .then(res => res.json())
@@ -11,4 +11,8 @@ export class TradingService {
       )
       .catch(err => console.log(err));
   }
+}
+
+export interface HandlerFunction {
+  (res: Response): Response;
 }
