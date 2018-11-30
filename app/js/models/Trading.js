@@ -14,6 +14,19 @@ System.register([], function (exports_1, context_1) {
                 get volume() {
                     return this.quantity * this.value;
                 }
+                toText() {
+                    console.log('Trading');
+                    console.log(`
+      Date: ${this.date}
+      Value: ${this.value}
+      Volume: ${this.volume}
+    `);
+                }
+                isEquals(trading) {
+                    return this.date.getDate() == trading.date.getDate()
+                        && this.date.getMonth() == trading.date.getMonth()
+                        && this.date.getFullYear() == trading.date.getFullYear();
+                }
             };
             exports_1("Trading", Trading);
         }

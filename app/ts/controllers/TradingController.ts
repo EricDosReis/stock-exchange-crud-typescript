@@ -1,7 +1,7 @@
 import { Trading, Tradings, PartialTrading } from '../models/index';
 import { TradingsView, MessageView } from '../views/index';
 
-import { domInject, throttle, isOk } from '../helpers/index';
+import { domInject, throttle, isOk, log } from '../helpers/index';
 import { weekDay } from '../enums/weekDay';
 import { TradingService } from '../services/index';
 
@@ -36,6 +36,8 @@ export class TradingController {
         parseFloat(this._inputValue.value),
       ))
 
+      log(this._tradings);
+
       this._tradingsView.update(this._tradings);
       this._messageView.update('Trading added successfully');
     } else {
@@ -44,17 +46,21 @@ export class TradingController {
   }
 
   @throttle()
-  importAll():void {
-    this._tradingService
-      .getTradings(isOk)
-      .then((tradings) => {
-        tradings
-          .forEach((trading: Trading) => this._tradings.add(trading));
+  async importAll() {
+    try {
+      const tradingsToImport = await this._tradingService.getTradings(isOk)
+      const importedTradings = this._tradings.toArray();
 
-        this._tradingsView.update(this._tradings);
-        this._messageView.update('Tradings imported successfully');
-      })
-      .catch((err: string) => this._messageView.update(`An unexpected error occurs: ${err}`));
+      tradingsToImport
+        .filter(trading =>
+          !importedTradings.some(importedTrading => importedTrading.isEquals(trading)))
+        .forEach((trading: Trading) => this._tradings.add(trading));
+
+      this._tradingsView.update(this._tradings);
+      this._messageView.update('Tradings imported successfully');
+    } catch(err) {
+      this._messageView.update(err.message)
+    }
   }
 
   private _isWeekend(date: Date): boolean {

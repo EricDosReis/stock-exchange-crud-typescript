@@ -1,6 +1,8 @@
 import { Trading } from './Trading';
+import { Loggable } from './Loggable'
+import { Equable } from './Equable'
 
-export class Tradings {
+export class Tradings implements Loggable, Equable<Tradings> {
 
   private _tradings: Trading[] = [];
 
@@ -12,4 +14,13 @@ export class Tradings {
     return ([] as Trading[]).concat(this._tradings);
   }
   
+  toText(): void {
+    console.log('Tradings');
+    console.log(this._tradings);
+  }
+
+  isEquals(tradings: Tradings): boolean {
+    return JSON.stringify(this._tradings) == JSON.stringify(tradings.toArray());
+  }
+
 }

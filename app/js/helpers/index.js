@@ -1,4 +1,4 @@
-System.register(["./promise", "./decorators/logExecutionTime", "./decorators/domInject", "./decorators/throttle"], function (exports_1, context_1) {
+System.register(["./promise", "./log", "./decorators/logExecutionTime", "./decorators/domInject", "./decorators/throttle"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     function exportStar_1(m) {
@@ -12,6 +12,9 @@ System.register(["./promise", "./decorators/logExecutionTime", "./decorators/dom
         setters: [
             function (promise_1_1) {
                 exportStar_1(promise_1_1);
+            },
+            function (log_1_1) {
+                exportStar_1(log_1_1);
             },
             function (logExecutionTime_1_1) {
                 exportStar_1(logExecutionTime_1_1);

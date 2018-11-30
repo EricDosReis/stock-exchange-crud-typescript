@@ -6,6 +6,14 @@ System.register(["../models/index", "../views/index", "../helpers/index", "../en
         else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
+    var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    };
     var __moduleName = context_1 && context_1.id;
     var index_1, index_2, index_3, weekDay_1, index_4, TradingController;
     return {
@@ -39,6 +47,7 @@ System.register(["../models/index", "../views/index", "../helpers/index", "../en
                     let date = new Date(this._inputDate.value.replace(/-/g, '/'));
                     if (!this._isWeekend(date)) {
                         this._tradings.add(new index_1.Trading(date, parseInt(this._inputQuantity.value), parseFloat(this._inputValue.value)));
+                        index_3.log(this._tradings);
                         this._tradingsView.update(this._tradings);
                         this._messageView.update('Trading added successfully');
                     }
@@ -47,15 +56,20 @@ System.register(["../models/index", "../views/index", "../helpers/index", "../en
                     }
                 }
                 importAll() {
-                    this._tradingService
-                        .getTradings(index_3.isOk)
-                        .then((tradings) => {
-                        tradings
-                            .forEach((trading) => this._tradings.add(trading));
-                        this._tradingsView.update(this._tradings);
-                        this._messageView.update('Tradings imported successfully');
-                    })
-                        .catch((err) => this._messageView.update(`An unexpected error occurs: ${err}`));
+                    return __awaiter(this, void 0, void 0, function* () {
+                        try {
+                            const tradingsToImport = yield this._tradingService.getTradings(index_3.isOk);
+                            const importedTradings = this._tradings.toArray();
+                            tradingsToImport
+                                .filter(trading => !importedTradings.some(importedTrading => importedTrading.isEquals(trading)))
+                                .forEach((trading) => this._tradings.add(trading));
+                            this._tradingsView.update(this._tradings);
+                            this._messageView.update('Tradings imported successfully');
+                        }
+                        catch (err) {
+                            this._messageView.update(err.message);
+                        }
+                    });
                 }
                 _isWeekend(date) {
                     const day = date.getDay();

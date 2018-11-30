@@ -12,11 +12,14 @@ System.register(["../models/index"], function (exports_1, context_1) {
             TradingService = class TradingService {
                 getTradings(handler) {
                     return fetch('http://localhost:8080/tradings')
-                        .then(res => handler(res))
+                        .then(handler)
                         .then(res => res.json())
                         .then((tradings) => tradings
                         .map(trading => new index_1.Trading(new Date(), trading.quantity, trading.value)))
-                        .catch(err => console.log(err));
+                        .catch(err => {
+                        console.log(err);
+                        throw new Error('Could not import tradings');
+                    });
                 }
             };
             exports_1("TradingService", TradingService);
